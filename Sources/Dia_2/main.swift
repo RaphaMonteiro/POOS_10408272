@@ -1,47 +1,69 @@
 import Foundation
 
-protocol Manutencao {
-    var nomeMaquina: String {get}
-    var id : String {get}
-    var historicoMaquina: String {get}
+protocol Aula {
+    var nome : String {get}
+    var instrutor: String {get}
+    var categoria: String {get}
 
-    func realizarManutencao(data: String)-> Bool
-    func estaEmDia() -> Bool
+    func descricao() -> String
 }
 
-class Maquina:Manutencao{
-    let nomeMaquina: String
-    let id: String
-    private(set) var historicoMaquina: [String] = []
-    private(set) var operacional: Bool 
+class turmaColetiva : Aula{
+    var nome : String
+    var instrutor: String
+    var categoria: String
 
-    init(nomeMaquina:String,operacional:Bool){
-        self.nomeMaquina = nomeMaquina
-        self.id = String(Int(random()))
-        self.operacional = operacional
+    var minAlunos: Int
+    var minElegivel: Bool = false
+    var alunosInscritos: [Aluno] = []
+    var maxAlunos: Int
 
+    init(nome:String,instrutor:String,categoria:String, maxAlunos:Int, minAlunos:Int){
+        self.nome = nome
+        self.instrutor = instrutor
+        self.categoria = categoria
+        self.maxAlunos = maxAlunos
+        self.minAlunos = minAlunos
     }
 
-    func realizarManutencao(data: String) -> Bool {
-        self.historicoMaquina.append(data)
+    func descricao() -> String {
+        return """
+        Nome = \(self.nome)
+        Instrutor = \(self.instrutor)
+        Categoria = \(self.categoria)
+        """
+    }
 
-        //checkMaquina
-        //fixMaquina
-        //if fiz maquina true operacional true
-
-        if operacional{
+    func addAluno(aluno:Aluno)->Bool{
+        if alunosInscritos.count<maxAlunos && !alunosInscritos.contains(where: { $0.matricula == aluno.matricula}){
+            alunosInscritos.append(aluno)
+            if alunosInscritos.count > self.minAlunos{
+                self.minElegivel = true
+            }
             return true
-        }else{return false}
-    }
 
-    func estaEmDia() -> Bool {
-        if (historicoMaquina.last - today) > 30{
-            return false
         }else{
-            return true
+            return false
         }
     }
+}
 
+class treinosPersonal : Aula {
+    var nome : String
+    var instrutor: String
+    var categoria: String
 
+    init(nome:String,instrutor:String,categoria:String){
+        self.nome = nome
+        self.instrutor = instrutor
+        self.categoria = categoria
+    }
+    func descricao() -> String {
+        return """
+        Nome = \(self.nome)
+        Instrutor = \(self.instrutor)
+        Categoria = \(self.categoria)
+        """
+    }
 }
 
