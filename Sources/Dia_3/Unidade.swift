@@ -31,29 +31,34 @@ class Unidade{
     
 
     //Inicialização do catalogo da unidade
-    public var catalogo = catalogoPlano()
+    public var catalogo = catalogoPlano.shared
 
     
 
     private func checkAluno(cAluno : Aluno)-> Bool{
-        
+        if self.Alunos.isEmpty{
+            return false
+        }else{
         for (_, aluno) in Alunos{
             if aluno.getEmail() == cAluno.getEmail() {
                 return true
             }
         }
         return false
-
+        }
     }
 
     private func checkInstrutor(cInstrutor : Instrutor)-> Bool{
-        
+        if self.Instrutores.isEmpty{
+            return false
+        }else{
         for (_, instrutor) in Instrutores{
             if instrutor.getEmail() == instrutor.getEmail() {
                 return true
             }
         }
         return false
+        }
 
     }
 
@@ -61,7 +66,7 @@ class Unidade{
     
     func criarAluno(nivel: ExperienciaNivel ,nome:String, email:String , tipo : tipoUser) -> UUID?{
         let cAluno = Aluno(nivel:nivel ,nome:nome, email:email , tipo : tipo)
-        if !checkAluno(cAluno: cAluno) {
+        if checkAluno(cAluno: cAluno) {
             return nil
         }else{
             self.Alunos[cAluno.getId()] = cAluno
@@ -71,7 +76,7 @@ class Unidade{
 
 
     func addAluno(aAluno:Aluno) -> Bool{
-        if !checkAluno(cAluno: aAluno) {
+        if checkAluno(cAluno: aAluno) {
             return false
         }else{
             self.Alunos[aAluno.getId()] = aAluno
@@ -80,7 +85,7 @@ class Unidade{
     }
 
     func addInstrutor(especialidade:CategoriasAulas,nome:String, email:String , tipo : tipoUser)->Bool{
-        var cInstrutor = Instrutor(especialidade:especialidade, nome:nome, email:email, tipo:tipo)
+        let cInstrutor = Instrutor(especialidade:especialidade, nome:nome, email:email, tipo:tipo)
         if checkInstrutor(cInstrutor:cInstrutor) {
             return false
         }else{
@@ -97,9 +102,19 @@ class Unidade{
         }
     }
 
+    func getAlunoEmail(email: String)-> Aluno?{
+        for (_, aluno) in Alunos{
+            if aluno.getEmail() == email {
+                return aluno
+            }
+        }
+        return nil
+    }
+    
+
     func agendarAulaPersonal(categoria: CategoriasAulas ,aluno:Aluno, instrutor:Instrutor, data: Date)-> Bool{
             if aluno.plano!.Modalidades.contains(categoria){
-                if agendarAulaPersonal(categoria: categoria, aluno: aluno, instrutor: instrutor, data: data){
+                if instrutor.agendar(categoria: categoria, aluno: aluno, instrutor: instrutor, data: data){
                     return true
                 }else{
                     return false
@@ -108,6 +123,13 @@ class Unidade{
             }else{
                 return false
             }
+    }
+    func listarAgendamentos()->String{
+        var out = "Agendamentos Personal:\n"
+        for agendamento in AgendamentosPersonal{
+            out += "Categoria: \(agendamento.categoria) \n- Aluno: \(agendamento.aluno.nome) \n- Instrutor: \(agendamento.instrutor.nome) \n- Data: \(agendamento.data)\n"
+        }
+        return out
     }
     
 
@@ -139,6 +161,17 @@ class Unidade{
             return defeituoso
         }
         
+    }
+    func getAlunos() -> [Aluno]{
+        return Array(Alunos.values)
+    }
+
+    func reset(){
+        self.Instrutores = [:]
+        self.Alunos = [:]
+        self.Maquinas = [:]
+        self.Aulas = []
+        self.AgendamentosPersonal = []
     }
 
 }

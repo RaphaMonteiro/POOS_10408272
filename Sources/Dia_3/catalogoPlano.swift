@@ -10,6 +10,9 @@ protocol catalogoPlanoProtocol{
 class catalogoPlano : catalogoPlanoProtocol{
     //singleton
     static let shared = catalogoPlano()
+    private init(){
+        self.planos = [:]
+    }
 
     private var planos: [String: Plano] = [:]
 
