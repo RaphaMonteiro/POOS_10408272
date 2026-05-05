@@ -2,7 +2,7 @@ import Foundation
 class Instrutor: User { 
     
     let especialidade : CategoriasAulas
-    private (set) var Agendamentos: [(CategoriasAulas,Aluno,Instrutor,data)] = []
+    private (set) var agendaInstrutor: [Date:(CategoriasAulas,Aluno,Instrutor)] = [:]
     
 
     init(especialidade:CategoriasAulas,nome:String, email:String , tipo : tipoUser){
@@ -11,16 +11,21 @@ class Instrutor: User {
         super.init(nome: nome, email: email, tipo: tipo)
     }
 
+    func agendar(categoria: CategoriasAulas ,aluno:Aluno, instrutor:Instrutor, data: Date)-> Bool{
+           
+            if let agendamento = agendaInstrutor[data]{ 
+                return false
+            }else{
+                self.agendaInstrutor[data]=(categoria,aluno,instrutor)
+                return true
+            }
 
-    func agendarAulaPersonal(categoria: CategoriaAulas ,aluno:Aluno, instrutor:Instrutor, data: Date)-> Bool{
-            self.Agendamentos.append((categoria,aluno,instrutor,data))
-            return true
-    }
+        }
 
 
 
     override func descricao() -> String {
-        var out = super.descricao()
+        let out = super.descricao()
 
         return out+"\nEspecialidade = \(self.especialidade)"
     }

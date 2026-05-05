@@ -22,16 +22,36 @@ struct Plano {
     func getNome() -> String{
         return self.nome
     }
-    func addModalidade(categoria:[CategoriasAulas]){
+    mutating func addModalidade(categoria:[CategoriasAulas]){
         if categoria.isEmpty{
             print("nada adicionado")
         }else{
             for c in categoria{
-                Modalidades.insert(c)
+                self.Modalidades.insert(c)
+            }
+        } 
+    }
+
+    mutating func deletarModalidade(categoria:[CategoriasAulas]){
+        if categoria.isEmpty{
+            print("nada adicionado")
+        }else{
+            for c in categoria{
+                self.Modalidades.remove(c)
             }
         }
-        
     }
+
+    mutating func listarModalidade(){
+        if self.Modalidades.isEmpty{
+            print("Nenhuma Modalidade")
+        }else{
+            for c in self.Modalidades{
+                print(c)
+            }
+        }
+    }
+
     func descricao() -> String{
         return"""
         Nome: \(self.getNome())

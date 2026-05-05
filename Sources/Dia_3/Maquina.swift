@@ -2,8 +2,8 @@ import Foundation
 
 protocol Manutencao {
     var nomeMaquina: String {get}
-    var id : String {get}
-    var historicoMaquina: String {get}
+    var id : UUID {get}
+    var historicoMaquina: [String] {get}
 
     func realizarManutencao(data: String)-> Bool
     func estaEmDia() -> Bool

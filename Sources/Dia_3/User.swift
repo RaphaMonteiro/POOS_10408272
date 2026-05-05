@@ -5,16 +5,7 @@ enum ExperienciaNivel:String {
 	case Intermediario = "Intermediario"
 	case Avançado = "Avançado"
 	}
-	
-enum CategoriasAulas:String, CaseIterable {
-	case Musculação = "Musculação"
-	case Spinning = "Spinning"
-	case Yoga = "Yoga" 
-	case Funcional = "Funcional"
-	case Luta = "Artes Marciais"
-    
-	}
-	
+		
 enum tipoUser:String{
 	case Aluno = "Aluno"
 	case Instrutor = "Instrutor"
@@ -24,7 +15,7 @@ class User {
 	let nome: String
 	private var email: String
 	let tipo : tipoUser
-    private (set) let id = UUID
+    private let id : UUID
 	
 	init(nome:String, email:String , tipo : tipoUser){
         self.nome = nome
@@ -34,14 +25,18 @@ class User {
         }
     
     func getEmail() ->String{
-        return email
+        return self.email
     }
     func setEmail(email:String){
         self.email = email
 
     }
+    func getId()->UUID{
+        return self.id
+    }
     func descricao() -> String {
         return """
+        Id: \(self.getId())
         Nome: \(self.nome)
         Email: \(self.getEmail())
         Tipo: \(self.tipo)

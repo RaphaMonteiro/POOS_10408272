@@ -139,6 +139,26 @@
             "target": "Dia_2",
             "configuration": "release",
             "preLaunchTask": "swift: Build Release Dia_2"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:POOS_10408272}",
+            "name": "Debug Dia_3",
+            "target": "Dia_3",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug Dia_3"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:POOS_10408272}",
+            "name": "Release Dia_3",
+            "target": "Dia_3",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release Dia_3"
         }
     ]
 }

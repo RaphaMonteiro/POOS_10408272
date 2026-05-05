@@ -2,7 +2,7 @@ import Foundation
 
 class Aluno:User{
     
-    var plano : Plano?
+    var plano : Plano? = nil
     let nivel : ExperienciaNivel 
     
     init( nivel: ExperienciaNivel ,nome:String, email:String , tipo : tipoUser){
@@ -11,27 +11,20 @@ class Aluno:User{
         super.init(nome: nome, email: email, tipo: tipo)
     }
 
-    func addPlano(planoAluno:String)->Bool{
+    func addPlano(planoAluno:String){
         if self.plano == nil {
-        let planoT: Plano? = catalogo.obter(nome:planoAluno)
+        let planoT: Plano? = Unidade.shared.catalogo.obter(nome:planoAluno)
         if let plano = planoT {
-            self.plano = plano
-            return true
-        }else{
-            return false
+            self.plano = plano  
         }
-        }else{
-            return false
-        }
+        
+    }
     }
 
-    func alterarPlano(planoAluno:String)->Bool{
-        let planoT : Plano? = catalogo.obter(nome: planoAluno)
+    func alterarPlano(planoAluno:String){
+        let planoT : Plano? = Unidade.shared.catalogo.obter(nome: planoAluno)
         if let plano = planoT{
             self.plano = plano
-            return true
-        }else{
-            return false
         }
     }
 
@@ -39,21 +32,12 @@ class Aluno:User{
 
 
     override func descricao() -> String{
+
+        let out = super.descricao() 
+
         if self.plano != nil{
-        return """
-        Nome: \(self.nome)
-        Email: \(self.getEmail())
-        Tipo: \(self.tipo)
-        Plano: \(self.plano!.getNome())
-        Nivel: \(self.nivel)
-        """}else{
-        return """
-        Nome: \(self.nome)
-        Email: \(self.getEmail())
-        Tipo: \(self.tipo)
-        Plano: Inativo
-        Nivel: \(self.nivel)
-        """
+        return out+"\nPlano: \(self.plano!.getNome())\nNivel: \(self.nivel)"}else{
+        return out+"\nPlano: Inativo\nNivel: \(self.nivel)"
         }
     }
 }
