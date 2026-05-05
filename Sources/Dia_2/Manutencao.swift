@@ -2,22 +2,22 @@ import Foundation
 
 protocol Manutencao {
     var nomeMaquina: String {get}
-    var id : String {get}
-    var historicoMaquina: String {get}
+    var id : UUID {get}
+    var historicoMaquina: [String] {get}
 
     func realizarManutencao(data: String)-> Bool
     func estaEmDia() -> Bool
 }
 
-class Maquina:Manutencao{
+class Maquina : Manutencao{
     let nomeMaquina: String
-    let id: String
+    let id: UUID
     private(set) var historicoMaquina: [String] = []
     private(set) var operacional: Bool 
 
     init(nomeMaquina:String,operacional:Bool){
         self.nomeMaquina = nomeMaquina
-        self.id = String(Int(random()))
+        self.id = UUID()
         self.operacional = operacional
 
     }
@@ -35,7 +35,12 @@ class Maquina:Manutencao{
     }
 
     func estaEmDia() -> Bool {
-        if (historicoMaquina.last - today) > 30{
+        //let last = formatter.date(historicoMaquina.last)
+        let last = Date()
+        let today = Date()
+        let calendar = Calendar.current
+        if let dataLimite = calendar.date(byAdding: .day, value: 30, to: last),
+        today>=dataLimite{
             return false
         }else{
             return true

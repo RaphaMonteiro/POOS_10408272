@@ -35,7 +35,6 @@ class Maquina:Manutencao{
                 operante = false
             }
         }
-        
 
         if operante{
             return true

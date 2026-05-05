@@ -1,11 +1,12 @@
 import Foundation
+
 enum ExperienciaNivel:String {
 	case Iniciante = "Iniciante"
 	case Intermediario = "Intermediario"
 	case Avançado = "Avançado"
 	}
 	
-enum CategoriasAulas:String {
+enum CategoriasAulas:String, CaseIterable {
 	case Musculação = "Musculação"
 	case Spinning = "Spinning"
 	case Yoga = "Yoga" 

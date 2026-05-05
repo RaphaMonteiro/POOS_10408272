@@ -1,6 +1,6 @@
 
 protocol catalogoPlanoProtocol{
-    func criar(nome: String, valorMensalidade: Double, possuiPersonal: Bool, limAulasDiaria: Int, validadeMensalidade:Int) ->Bool
+    func criar(nome: String, valorMensalidade: Double, possuiPersonal: Bool, limAulasDiaria: Int, validadeMensalidade:Int,Modalidades:Set<CategoriasAulas>) ->Bool
     func obter(nome:String) -> Plano?
     func listar() -> [Plano]
     func apresentar() -> String
@@ -15,14 +15,14 @@ class catalogoPlano : catalogoPlanoProtocol{
 
     //formatar chave nome
     private func formatar(_ nome:String) -> String{
-        var nome = nome.trimmingCharacters(in: .whitespacesAndNewlines)
+        let nome = nome.trimmingCharacters(in: .whitespacesAndNewlines)
         return nome.uppercased()
 
 
     }
 
     //Create (não altera existentes)
-    func criar(nome: String, valorMensalidade: Double, possuiPersonal: Bool, limAulasDiaria: Int, validadeMensalidade:Int) ->Bool{
+    func criar(nome: String, valorMensalidade: Double, possuiPersonal: Bool, limAulasDiaria: Int, validadeMensalidade:Int, Modalidades:Set<CategoriasAulas>) ->Bool{
         let chave = formatar(nome)
 
         guard planos[chave] == nil else{

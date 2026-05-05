@@ -13,3 +13,4 @@ for (i,m) in Maquinas{
 
 }
 
+var today = Calendar.date()
